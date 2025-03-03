@@ -410,4 +410,10 @@ obj/
 
 *appsettings.json
 *appsettings.Development.json
+
+*.db
+*.db-shm
+*.db-wal
+
+*/Migrations
 # End of https://www.toptal.com/developers/gitignore/api/csharp,dotnetcore
