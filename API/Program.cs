@@ -37,6 +37,11 @@ app.UseCors(options => options.AllowAnyHeader().AllowAnyMethod()
 app.UseAuthorization();
 app.MapControllers();
 
+if (app.Environment.IsDevelopment())
+{
+    app.UseDeveloperExceptionPage();
+}
+
 using var scope = app.Services.CreateScope();
 var services = scope.ServiceProvider;
 
