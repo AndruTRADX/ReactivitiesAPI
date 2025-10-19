@@ -3,12 +3,14 @@ using Application.Activities.Commands;
 using Application.Activities.Queries;
 using Application.DTOs;
 using Domain;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers;
 
 public class ActivitiesController() : BaseApiController
 {
+    // [AllowAnonymous] // : This allows anonymous access to this endpoint despite the global authorization policy
     [HttpGet]
     public async Task<ActionResult<List<Activity>>> GetActivities()
     {

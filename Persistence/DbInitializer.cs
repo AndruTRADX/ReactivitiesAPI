@@ -1,13 +1,43 @@
 using System;
 using Domain;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace Persistence;
 
 public class DbInitializer
 {
-    public static async Task SeedData(AppDbContext context) 
+    public static async Task SeedData(AppDbContext context, UserManager<User> userManager)
     {
+        if (!userManager.Users.Any())
+        {
+            var users = new List<User>
+            {
+                new()
+                {
+                    DisplayName = "alice",
+                    UserName = "alice@test.com",
+                    Email = "alice@test.com"
+                },
+                new()
+                {
+                    DisplayName = "tom",
+                    UserName = "tom@test.com",
+                    Email = "tom@test.com"
+                },
+                new()
+                {
+                    DisplayName = "jane",
+                    UserName = "jane@test.com",
+                    Email = "jane@test.com"
+                },
+            };
+
+            foreach (var user in users)
+            {
+                await userManager.CreateAsync(user, "Pa$$w0rd");
+            }
+        }
         if (context.Activities.Any()) return;
 
         var activities = new List<Activity>() {
@@ -118,7 +148,7 @@ public class DbInitializer
                 Longitude = -0.781404
             }
         };
-    
+
         context.Activities.AddRange(activities);
         await context.SaveChangesAsync();
     }
